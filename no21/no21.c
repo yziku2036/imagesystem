@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
   int scoord[2];
   int dcoord[2];
 
-  char rname[]="ans21-1r.bmp";
-  char sname[]="ans21-1s.bmp";
-  char dname[]="ans21-1d.bmp";
+  char rname[]="ans21-4r.bmp";
+  char sname[]="ans21-4s.bmp";
+  char dname[]="ans21-4d.bmp";
 
   // 例題プログラム
   // 　BMPファイルをコピーするプログラム

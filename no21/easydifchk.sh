@@ -1,1 +1,1 @@
-./diffchk ans$1.bmp out$1.bmp
+./diffchk ans21-$1.bmp out21-$1.bmp
