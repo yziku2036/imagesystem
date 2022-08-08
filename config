@@ -1,0 +1,5 @@
+ Host github github.com
+    yziku2036 git
+     github.com
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes

@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "def.h"
+#include "var.h"
+#include "bmpfile.h"
+
+
+//checkOutofindex
+int isooi(int,int,int);
+
+
+int main(int argc, char *argv[])
+{
+  imgdata idata;
+  double c;
+  int x, y;
+  int dx,dy,df;
+  int nowx,nowy;
+  int prewitt[3][3]={{1,0,-1},{1,0,-1},{1,0,-1}};
+  // 例題プログラム
+  // 　BMPファイルをコピーするプログラム
+
+  if (argc < 3) printf("使用法：cpbmp コピー元.bmp コピー先.bmp\n");
+  else {
+    if (readBMPfile(argv[1], &idata) > 0)
+      printf("指定コピー元ファイル%sが見つかりません\n",argv[1]);
+    else {
+      for (y = 0; y < idata.height; y++){
+	      for (x = 0; x < idata.width; x++){
+          dx=0;
+          dy=0;
+          for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+              nowx=x+j-1;
+              nowy=y+i-1;
+              //もしOutofIndexでないなら
+              if(isooi(nowx,nowy,idata.height)==0){
+                //printf("dx=%d\n",idata.source[RED][nowy][nowx]*prewitt[i][j]);
+                dx+=idata.source[RED][nowy][nowx]*prewitt[j][i];
+                //printf("dy=%d\n",idata.source[RED][nowy][nowx]*prewitt[j][i]);
+                dy+=idata.source[RED][nowy][nowx]*prewitt[i][j];
+                
+              }
+              else
+                printf("OUT OF BOUNDS AT (%d,%d)\n",nowx,nowy);
+            }
+          }
+        df=(dx*dx)+(dy*dy);
+        df=sqrt(df);
+        idata.cwork[RED][y][x]=df;
+        }
+      }
+
+    /* 例題：コピーするプログラム */
+      for (y = 0; y < idata.height; y++){
+	      for (x = 0; x < idata.width; x++){
+          idata.results[RED][y][x]  =idata.cwork[RED][y][x];
+	        idata.results[GREEN][y][x]=idata.cwork[RED][y][x];
+    	    idata.results[BLUE][y][x] =idata.cwork[RED][y][x];
+      	}
+      }
+      if (writeBMPfile(argv[2], &idata) > 0)
+	printf("コピー先ファイル%sに保存できませんでした\n",argv[2]);
+    }
+  }
+}
+
+
+//OutOfIndexしてたら1を返す
+int isooi(int a,int b,int max){
+  if(a<0 || a>max-1 || b<0 || b>max-1)
+    return 1;
+  else
+    return 0;  
+}
