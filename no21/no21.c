@@ -51,7 +51,6 @@ int main(int argc, char *argv[])
       printf("指定コピー元ファイル%sが見つかりません\n",argv[1]);
     if (readBMPfile(argv[2], &template) > 0)
       printf("指定コピー元ファイル%sが見つかりません\n",argv[2]);
-    
     else {
     /* 例題：コピーするプログラム */
       binarization_img(&idata);
@@ -65,8 +64,6 @@ int main(int argc, char *argv[])
       //左上からの処理をするためにyを反転(普通に0から始めると左下からになってしまう)
       for(x=0;x<idata.height-template.height;x++){
         for(y=0;y<idata.width-template.width;y++){
-          
-          
           rval=cor_coe(&idata,&template,y,x);
           sval=similar(&idata,&template,y,x);
           dval=distance(&idata,&template,y,x);

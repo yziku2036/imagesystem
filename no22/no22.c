@@ -22,8 +22,6 @@ int main(int argc, char *argv[])
   // BMPファイルをコピーするプログラム
   fp_input = fopen(argv[1], "r");
   fp_output = fopen(argv[2], "w");
-  printf("%s\n",argv[2]);
-  fprintf(fp_output,"Fuck");
   fscanf(fp_input, "%d", &N);
   char camma = ' ';
   double val;
@@ -42,11 +40,12 @@ int main(int argc, char *argv[])
     {
       for (int i = 0; i < N; i++)
       {
+        comp[i].re=0.0;
+        comp[i].im=0.0;
         fscanf(fp_input, "%c%lf", &camma, &val);
-        //printf("[%d]:%lf\n", i, val);
-        if (val > 0)
-          comp[i].re = val;
-        else
+        comp[i].re=val;
+        printf("[%d]:%lf\n", i, val);
+        if (val < 0)
           comp[i].im = val;
       }
     }
@@ -57,8 +56,8 @@ int main(int argc, char *argv[])
     fprintf(fp_output, "j18418\n");
     dft(comp, N, fp_output);
   }
-  free(fp_input);
-  free(fp_output);
+  //free(fp_input);
+  //free(fp_output);
   return 0;
 }
 
@@ -84,10 +83,9 @@ void dft(complex *comp, int N, FILE *fp)
     if (fabs(im) < EPS)
       im = fabs(im);
     ret = sqrt((re * re) + (im * im));
-    //printf("%lf\n", ret);
-    // fprintf(fp,"%lf,",ret);
-    //printf("FPRINTF");
-    fprintf(fp, "%2d: %.4lf, %.4lf, %.4lf", i, re, im, ret);
+    printf("ret=%lf\n", ret);
+
+    fprintf(fp, "%3d:  %.4lf, %.4lf, %.4lf\n", i, re, im, ret);
   }
   return;
 }
