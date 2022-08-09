@@ -50,8 +50,15 @@ int main(int argc, char* argv[])
 				fgetc(fp);
 			}
 		}
+
+        
+		for(int i=0;i<N;i++){
+			printf("re=%lf\n",x[i].real);
+			printf("im=%lf\n",x[i].imag);			
+}
 		fclose(fp);
 		fprintf(fo, "j17407\n");
+
 		DFT(x, N, fo);
 		fclose(fo);
 	}
